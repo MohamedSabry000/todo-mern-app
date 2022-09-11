@@ -1,4 +1,6 @@
+import { BASE_URL } from '../../utils/getDataFromAPI'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { Todo, User } from '../../@types/types';
 
 import todosService from './todos-services';
 
@@ -16,13 +18,27 @@ export const register = createAsyncThunk(
   }
 );
 
+export const getTodos = createAsyncThunk(
+  'todos/getTodos',
+  async () => {
+    return await todosService.getTodos()
+  }
+);
+
+export const createTodo = createAsyncThunk(
+  'todos/createTodo',
+  async (todo: { title: string, description: string, priority: string, status: string, startDate: string, endDate: string }) => {
+    return await todosService.createTodo(todo.title, todo.description, todo.priority, todo.status, todo.startDate, todo.endDate);
+  }
+);
+
 const initialState = {
-  user: null,
-  todos: [],
-  todo: {},
-  isLoading: false,
-  isSuccess: false,
-  isError: false,
+  todos: [] as Todo[],
+  user: {} as User | null,
+  todo: {} as Todo | {},
+  isLoading: false as boolean,
+  isSuccess: false as boolean,
+  isError: false as boolean,
 };
 
 const todosSlice = createSlice({
@@ -40,6 +56,8 @@ const todosSlice = createSlice({
     setLogout(state) {
       state.user = null;
       localStorage.removeItem('token');
+      state.todos = [];
+      state.todo = {};
     }
   },
   extraReducers: {
@@ -71,6 +89,39 @@ const todosSlice = createSlice({
       state.user = action.payload;
     },
     [register.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+    // Todos
+    // Get Todos
+    [getTodos.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getTodos.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+
+      if(action.payload.data.status === 'success'){
+        state.todos = action.payload.data.todos;
+      }else{
+        state.isLoading = false;
+        state.isError = true;
+      }
+    },
+    [getTodos.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+    // Create Todo
+    [createTodo.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [createTodo.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.todos = [...state.todos, action.payload.data];
+    },
+    [createTodo.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
     },

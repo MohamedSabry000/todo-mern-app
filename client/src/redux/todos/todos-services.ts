@@ -10,10 +10,22 @@ const register = async (name: string, email: string, password: string) => {
   return data;
 }
 
+const getTodos = async () => {
+  const data = await getDataFromAPI.get('todos');
+  return data;
+}
+
+const createTodo = async (title: string, description: string, priority: string, status: string, startDate: string, endDate: string) => {
+  const data = await getDataFromAPI.post('todos', { title, description, priority, status, startDate, endDate });
+  return data;
+}
+
 
 const todosService = {
   login,
   register,
+  getTodos,
+  createTodo,
 };
 
 export default todosService;

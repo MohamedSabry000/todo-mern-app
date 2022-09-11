@@ -16,12 +16,9 @@ const todoScheme = new Schema({
         enum: ['todo', 'inProgress', 'underReview', 'rework', 'completed'],
         default: 'todo'
     },
-    startDate: Date,
-    endDate: Date,
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    startDate: String,
+    endDate: String,
+    user: String
 },{
     timestamps: true
 })

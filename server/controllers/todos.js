@@ -25,7 +25,13 @@ module.exports = {
     res.json({ status: 'success', todos });
   }),
   createNewTodo: catchAsync(async (req, res) => {
-    const todo = await Todo.create(req.body);
+    const { title, description, priority, status, startDate, endDate } = req.body
+    const data = {
+      user: req.userId,
+      title, description, priority, status, startDate, endDate
+    }
+    console.log(data)
+    const todo = await Todo.create(data)
     res.json({
         status: 'success',
         data: todo
