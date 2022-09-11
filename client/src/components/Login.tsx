@@ -20,7 +20,7 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/">
-        Todos App
+        Momo Todos App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

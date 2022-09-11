@@ -8,12 +8,15 @@ import Typography from '@mui/material/Typography';
 import { Todo } from '../@types/types';
 import { Grid } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { resetFormState, updateTodo } from '../redux/todos/todos-slice';
+import { deleteTodo, resetFormState, updateTodo } from '../redux/todos/todos-slice';
 
 export default function SingleCard({ todo }: { todo: Todo}) {
   const dispatch = useDispatch();
   const handleUpdate = () => {
     dispatch(updateTodo(todo))
+  }
+  const handleDelete = () => {
+    dispatch(deleteTodo(todo._id) as any);
   }
 
   const styles = {
@@ -60,7 +63,7 @@ export default function SingleCard({ todo }: { todo: Todo}) {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={handleUpdate}>edit</Button>
-        <Button size="small">delete</Button>
+        <Button size="small" onClick={handleDelete}>delete</Button>
       </CardActions>
     </Card>
   );

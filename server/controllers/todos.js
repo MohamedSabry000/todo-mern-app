@@ -53,7 +53,11 @@ module.exports = {
     const { id } = req.params;
     try {
       await Todo.findByIdAndDelete(id);
-      res.status(404).json();
+      res.json({
+        status: 'success',
+        message: 'Todo deleted',
+        _id: id,
+      });
     } catch (error) {
       res.status(500).json({ status: 'failure', message: error.message });
     }

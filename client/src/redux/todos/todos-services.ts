@@ -25,6 +25,11 @@ const updateTodo = async (_id: string, title: string, description: string, prior
   return data;
 }
 
+const deleteTodo = async (_id: string) => {
+  const data = await getDataFromAPI.delete(`todos/${_id}`);
+  return data;
+}
+
 
 const todosService = {
   login,
@@ -32,6 +37,7 @@ const todosService = {
   getTodos,
   createTodo,
   updateTodo,
+  deleteTodo,
 };
 
 export default todosService;

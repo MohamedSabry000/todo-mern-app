@@ -17,7 +17,6 @@ function Home() {
           </div>
         </Grid>
       </Grid>
-      <div>Home</div>
     </Container>
   )
 }

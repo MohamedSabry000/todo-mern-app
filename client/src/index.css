@@ -25,3 +25,9 @@ a {
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

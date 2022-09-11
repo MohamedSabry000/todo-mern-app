@@ -7,6 +7,7 @@ import {
   Login,
   Home,
 } from './components';
+import Pages from './components/Pages';
 
 function App() {
   const { user } = useSelector((state: any) => state);
@@ -20,6 +21,7 @@ function App() {
               <>
                 <Route path="/" element={<Home />} />
                 <Route path="/todo/:id" element={<></>} />
+                <Route path="/:page" element={<Pages />} />
               </>
             ) : (
               <>
