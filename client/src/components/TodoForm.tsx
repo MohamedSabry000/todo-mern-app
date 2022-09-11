@@ -100,17 +100,31 @@ function TodoForm() {
           </Select>
         </FormControl>
         <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        fullWidth
-        style={{marginBottom: '10px'}}
-        defaultValue={user.endDate}
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+          id="date"
+          label="Start Date"
+          type="date"
+          fullWidth
+          style={{marginBottom: '10px'}}
+          defaultValue={user.startDate}
+          sx={{ width: 220 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => setUser({ ...user, startDate: e.target.value })}
+        />
+        <TextField
+          id="date"
+          label="End Date"
+          type="date"
+          fullWidth
+          style={{marginBottom: '10px'}}
+          defaultValue={user.endDate}
+          sx={{ width: 220 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => setUser({ ...user, endDate: e.target.value })}
+        />
         <Button
           fullWidth
           variant="contained"

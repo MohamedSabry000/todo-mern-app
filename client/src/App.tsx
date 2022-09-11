@@ -6,6 +6,7 @@ import {
   Navbar,
   Login,
   Home,
+  Register,
 } from './components';
 import Pages from './components/Pages';
 
@@ -26,7 +27,7 @@ function App() {
             ) : (
               <>
               <Route path="/" element={<Login />} />
-              <Route path="/register" element={<></>} />
+              <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<></>} />
               </>
             )

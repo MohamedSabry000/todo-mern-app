@@ -21,7 +21,11 @@ const userScheme = new Schema({
         required: true,
         min: 6,
     },
-    avatar: String
+    avatar: String,
+    verified: {
+        type: Boolean,
+        default: false,
+    },
 },{
     timestamps: true
 })
