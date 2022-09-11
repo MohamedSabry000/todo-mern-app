@@ -8,7 +8,7 @@ import {
 } from './components';
 
 function App() {
-  const { user } = useSelector((state: any) => state.todos);
+  const { user } = useSelector((state: any) => state);
   return (
     <BrowserRouter>
       <Box>

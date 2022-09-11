@@ -31,7 +31,7 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.todos);
+  const { user } = useSelector((state: any) => state);
   const pathname = window.location.pathname.split('/')[1];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

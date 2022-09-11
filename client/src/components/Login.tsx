@@ -40,7 +40,7 @@ export default function Login() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    dispatch(login({ email: data.get('email')?.toString() || "", password: data.get('password')?.toString() || "" }));
+    dispatch(login({ email: data.get('email')?.toString() || "", password: data.get('password')?.toString() || "" }) as any);
   };
 
   return (
