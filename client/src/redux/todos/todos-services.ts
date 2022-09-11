@@ -20,12 +20,18 @@ const createTodo = async (title: string, description: string, priority: string, 
   return data;
 }
 
+const updateTodo = async (_id: string, title: string, description: string, priority: string, status: string, startDate: string, endDate: string) => {
+  const data = await getDataFromAPI.put(`todos/${_id}`, { title, description, priority, status, startDate, endDate });
+  return data;
+}
+
 
 const todosService = {
   login,
   register,
   getTodos,
   createTodo,
+  updateTodo,
 };
 
 export default todosService;

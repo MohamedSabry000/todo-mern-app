@@ -10,7 +10,7 @@ todosRouter.route('/')
   .post( authenticated, createNewTodo );
 todosRouter.route('/:id')
   .get( authenticated, findTodoById, getTodoById )
-  .patch( authenticated, findTodoById, updateTodo )
+  .put( authenticated, findTodoById, updateTodo )
   .delete( authenticated, findTodoById, deleteTodo );
 
 module.exports = todosRouter;

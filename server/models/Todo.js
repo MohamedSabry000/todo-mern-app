@@ -13,7 +13,7 @@ const todoScheme = new Schema({
     },
     status: {
         type: String,
-        enum: ['todo', 'inProgress', 'underReview', 'rework', 'completed'],
+        enum: ['todo', 'in-progress', 'under-review', 'rework', 'completed'],
         default: 'todo'
     },
     startDate: String,
