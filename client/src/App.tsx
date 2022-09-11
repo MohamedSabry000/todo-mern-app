@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import {
   Navbar,
   Login,
+  Home,
 } from './components';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
           {
             user ? (
               <>
-                <Route path="/" element={<></>} />
+                <Route path="/" element={<Home />} />
                 <Route path="/todo/:id" element={<></>} />
               </>
             ) : (

@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLogout } from '../redux/todos/todos-slice';
 
 const pages = [
+  {key: 'todo', value: 'Todo'},
   {key: 'in-progress', value: 'In Progress'},
   {key: 'under-review', value: 'Under Review'},
   {key: 'rework', value: 'Rework'},
