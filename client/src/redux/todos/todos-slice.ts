@@ -37,37 +37,45 @@ const todosSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
     },
+    setLogout(state) {
+      state.user = null;
+      localStorage.removeItem('token');
+    }
   },
   extraReducers: {
     // Users
     // Login
-    [login.pending]: (state, action) => {
+    [login.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [login.fulfilled]: (state, action) => {
+    [login.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload;
+      console.log(action.payload);
+      state.user = action.payload.data.token;
+      localStorage.setItem('token', action.payload.data.token);
     },
-    [login.rejected]: (state, action) => {
+    [login.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      state.user = null;
+      console.log(action.error);
     },
     // Register
-    [register.pending]: (state, action) => {
+    [register.pending.type]: (state, action) => {
       state.isLoading = true;
     },
-    [register.fulfilled]: (state, action) => {
+    [register.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload;
     },
-    [register.rejected]: (state, action) => {
+    [register.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
     },
   },
 });
 
-export const { reset } = todosSlice.actions;
+export const { reset, setLogout } = todosSlice.actions;
 export default todosSlice.reducer;

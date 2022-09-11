@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-// const cors = require('cors')
+const cors = require('cors')
 
 
 const todosRouter = require('./routes/v1/todos');
@@ -9,6 +9,9 @@ const authRouter = require('./routes/v1/auth');
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors({
+    origin: '*'
+}));
 
 
 app.use('/api/v1/todos', todosRouter);
@@ -24,8 +27,6 @@ app.all('*', (req, res) => {
 // const corsOptions = {
 //     origin: 'http://localhost:5050'
 // }
-// app.use(cors());
-
 
 app.use((err, req, res, next) => {
     console.log('global error handler');
