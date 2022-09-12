@@ -22,6 +22,6 @@ mongoose
 
 
 // Server Listen
-app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
   console.log('server is running');
 });
