@@ -19,7 +19,12 @@ module.exports = {
         console.log(user)
         // match
         // if(!user || !(await compare(password, user.password)) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
-        if(!user || !(password === user.password) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
+        if(!user || !(password === user.password) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password', reason: {
+            password: password === user.password,
+            p: password,
+            u: user.password,
+            verified: user.verified
+        } })
         const token = jwt.sign({id: user.id}, process.env.JWT_SECRET , {
             expiresIn: '90d'
         })
