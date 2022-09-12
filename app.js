@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors')
+const path = require("path")
+
 
 
 const todosRouter = require('./routes/v1/todos');
@@ -13,9 +15,17 @@ app.use(cors({
     origin: '*'
 }));
 
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+
 
 app.use('/api/v1/todos', todosRouter);
 app.use('/api/v1', authRouter);
+
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.all('*', (req, res) => {
     res.json({
@@ -23,7 +33,6 @@ app.all('*', (req, res) => {
         message: 'wrong url'
     })
 });
-
 // const corsOptions = {
 //     origin: 'http://localhost:5050'
 // }
