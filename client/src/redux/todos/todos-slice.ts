@@ -110,8 +110,14 @@ const todosSlice = createSlice({
     },
     [register.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
-      state.user = action.payload;
+      if(action.payload.data.status === 'success') {
+        state.isSuccess = true;
+        state.isError = false;
+      } else {
+        state.isSuccess = false;
+        state.isError = true;
+      }
+      // state.user = action.payload;
     },
     [register.rejected.type]: (state, action) => {
       state.isLoading = false;

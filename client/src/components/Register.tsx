@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../redux/todos/todos-slice';
 
 function Copyright(props: any) {
   return (
@@ -32,6 +34,10 @@ export default function Register() {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch()
+  const {isError, isSuccess} = useSelector((state: any) => state);
+  const [clicked, setClicked] = React.useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,6 +45,8 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    dispatch(register({ name: data.get('name')?.toString() || "", email: data.get('email')?.toString() || "", password: data.get('password')?.toString() || "" }) as any);
+    setClicked(true);
   };
 
   return (
@@ -63,11 +71,11 @@ export default function Register() {
               <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
                   value={user.name}
                   onChange={(e) => setUser({ ...user, name: e.target.value })}
@@ -107,6 +115,16 @@ export default function Register() {
             >
               Sign Up
             </Button>
+            {
+              clicked && isSuccess && <Typography variant="body2" color="success" align="center">
+                {'Registration successful, please, Check your email to verify your account.'}
+              </Typography>
+            }
+            {
+              clicked && isError && <Typography color="error" variant="body2" align="center">
+                Email is invalid or already exists
+              </Typography>
+            }
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
