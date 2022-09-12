@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { compare, hash } = require('bcryptjs')
+// const { compare, hash } = require('bcryptjs')
 const { catchAsync } = require('../utils/utils')
 const User = require('../models/User');
 const Token = require("../models/Token");
 const sendEmail = require('../utils/email');
 // const crypto = import("crypto");
 
-const saltRounds = 10;
+// const saltRounds = 10;
 
 module.exports = {
     login: catchAsync(async (req, res) => {
@@ -18,7 +18,8 @@ module.exports = {
         console.log("user")
         console.log(user)
         // match
-        if(!user || !(await compare(password, user.password)) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
+        // if(!user || !(await compare(password, user.password)) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
+        if(!user || !(password === user.password) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
         const token = jwt.sign({id: user.id}, process.env.JWT_SECRET , {
             expiresIn: '90d'
         })
@@ -37,7 +38,8 @@ module.exports = {
             if(user && !user.verified) {
                 await User.findByIdAndDelete(user._id);
             }
-            const hashedPwd = await hash(password, saltRounds); // hash password
+            // const hashedPwd = await hash(password, saltRounds); // hash password
+            const hashedPwd = password;
             const newUser = await User.create({name, email, password: hashedPwd});
             const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET , {
                 expiresIn: '90d'
@@ -151,7 +153,8 @@ module.exports = {
 
             const { password } = req.body;
             // const hashedPassword = await hash(password, 12);
-            const hashedPwd = await hash(password, saltRounds); // hash password
+            // const hashedPwd = await hash(password, saltRounds); // hash password
+            const hashedPwd = password;
             await User.findByIdAndUpdate({ _id: user._id }, { password: hashedPwd });
             await Token.findByIdAndRemove(token._id);
             console.log({status: 'success', message: "Password reset successfully"})
