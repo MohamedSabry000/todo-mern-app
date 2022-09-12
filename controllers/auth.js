@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-// const { compare, hash } = require('bcryptjs')
+const { compare, hash } = require('bcryptjs')
 const { catchAsync } = require('../utils/utils')
 const User = require('../models/User');
 const Token = require("../models/Token");
@@ -19,7 +19,7 @@ module.exports = {
         console.log(user)
         // match
         // if(!user || !(await compare(password, user.password)) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password'})
-        if(!user || !(password === user.password) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password', reason: {
+        if(!user || !(await compare(password, user.password)) || user.verified === false) res.json({status: 'failure', message: 'Invalid Email or Password', reason: {
             password: password === user.password,
             p: password,
             u: user.password,
