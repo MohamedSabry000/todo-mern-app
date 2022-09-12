@@ -11,7 +11,7 @@ const app = require('./app');
 
 // Mongo Connect
 mongoose
-.connect(DB_URL)
+.connect(DB_URL || "mongodb+srv://root:root@todo.qpzrajs.mongodb.net/?retryWrites=true&w=majority")
 .then(() => {
   console.log('hello connected');
 })
