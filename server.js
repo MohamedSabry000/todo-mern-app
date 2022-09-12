@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const app = require('./app');
 const path = require("path")
 
-app.use(express.static(path.join(__dirname, "client", "build")))
+app.use(app.static(path.join(__dirname, "client", "build")))
 
 
 // Mongo Connect
