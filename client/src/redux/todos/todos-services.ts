@@ -10,6 +10,16 @@ const register = async (name: string, email: string, password: string) => {
   return data;
 }
 
+const forgotPassword = async (email: string) => {
+  const data = await getDataFromAPI.post('reset-password', { email });
+  return data;
+}
+
+const resetPassword = async (id: string, token: string, password: string) => {
+  const data = await getDataFromAPI.post(`reset-password-confirm/${id}/${token}`, { password });
+  return data;
+}
+
 const getTodos = async () => {
   const data = await getDataFromAPI.get('todos');
   return data;
@@ -34,6 +44,8 @@ const deleteTodo = async (_id: string) => {
 const todosService = {
   login,
   register,
+  forgotPassword,
+  resetPassword,
   getTodos,
   createTodo,
   updateTodo,

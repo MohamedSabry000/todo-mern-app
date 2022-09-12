@@ -18,6 +18,20 @@ export const register = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'todos/forgotPassword',
+  async (email: string) => {
+    return await todosService.forgotPassword(email);
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'todos/resetPassword',
+  async (user: { id: string, token: string, password: string }) => {
+    return await todosService.resetPassword(user.id, user.token, user.password);
+  }
+);
+
 export const getTodos = createAsyncThunk(
   'todos/getTodos',
   async () => {
@@ -93,10 +107,16 @@ const todosSlice = createSlice({
     },
     [login.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
-      console.log(action.payload);
-      state.user = action.payload.data.token;
-      localStorage.setItem('token', action.payload.data.token);
+      console.log(action.payload)
+      if(action.payload.data.status === "success") {
+        state.isSuccess = true;
+        state.isError = false;
+        state.user = action.payload.data.token;
+        localStorage.setItem('token', action.payload.data.token);
+      } else {
+        state.isError = true;
+        state.isSuccess = false;
+      }
     },
     [login.rejected.type]: (state, action) => {
       state.isLoading = false;
@@ -120,6 +140,42 @@ const todosSlice = createSlice({
       // state.user = action.payload;
     },
     [register.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+    // Forgot Password
+    [forgotPassword.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [forgotPassword.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      if(action.payload.data.status === 'success') {
+        state.isSuccess = true;
+        state.isError = false;
+      } else {
+        state.isSuccess = false;
+        state.isError = true;
+      }
+    },
+    [forgotPassword.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+    // Reset Password
+    [resetPassword.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [resetPassword.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      if(action.payload.data.status === 'success') {
+        state.isSuccess = true;
+        state.isError = false;
+      } else {
+        state.isSuccess = false;
+        state.isError = true;
+      }
+    },
+    [resetPassword.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
     },

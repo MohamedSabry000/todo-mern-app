@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../redux/todos/todos-slice';
+import { register, resetPassword } from '../redux/todos/todos-slice';
+import { useParams } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -28,11 +29,11 @@ function Copyright(props: any) {
   );
 }
 
-export default function Register() {
-  const [user, setUser] = React.useState({
-    name: "",
-    email: "",
-    password: "",
+export default function ResetPassword() {
+  const { id, token } = useParams();
+  const [password, setPassword] = React.useState({
+    pass: "",
+    confirm: "",
   });
   const dispatch = useDispatch()
   const {isError, isSuccess} = useSelector((state: any) => state);
@@ -45,8 +46,12 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    dispatch(register({ name: data.get('name')?.toString() || "", email: data.get('email')?.toString() || "", password: data.get('password')?.toString() || "" }) as any);
-    setClicked(true);
+    if( password.pass === password.confirm ) {
+      dispatch(resetPassword({id: id || "", token: token || "", password: password.pass}) as any);
+      setClicked(true);
+    } else {
+      alert("Passwords do not match");
+    }
   };
 
   return (
@@ -64,36 +69,11 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Reset Password
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  value={user.name}
-                  onChange={(e) => setUser({ ...user, name: e.target.value })}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={user.email}
-                  onChange={(e) => setUser({ ...user, email: e.target.value })}
-                />
-              </Grid>
-              <Grid item xs={12}>
+            <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -102,8 +82,21 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  value={password.pass}
+                  onChange={(e) => setPassword({ ...password, pass: e.target.value })}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirm"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm"
+                  autoComplete="confirm-new-password"
+                  value={password.confirm}
+                  onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
                 />
               </Grid>
             </Grid>
@@ -113,25 +106,18 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Reset
             </Button>
             {
               clicked && isSuccess && <Typography variant="body2" color="success" align="center">
-                {'Registration successful, please, Check your email to verify your account.'}
+                {'Password reset successfully'}
               </Typography>
             }
             {
               clicked && isError && <Typography color="error" variant="body2" align="center">
-                Email is invalid or already exists
+                {'Password reset failed'}
               </Typography>
             }
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

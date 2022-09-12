@@ -5,4 +5,6 @@ export { default as TodoForm } from './TodoForm';
 export { default as TodoList } from './TodoList';
 export { default as SingleCard } from './SingleCard';
 export { default as Register } from './Register';
+export { default as ForgotPassword } from './ForgotPassword';
+export { default as ResetPassword } from './ResetPassword';
 // export { default as Pages } from './Pages';

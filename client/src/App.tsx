@@ -7,6 +7,8 @@ import {
   Login,
   Home,
   Register,
+  ForgotPassword,
+  ResetPassword,
 } from './components';
 import Pages from './components/Pages';
 
@@ -28,7 +30,8 @@ function App() {
               <>
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<></>} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset/:id/:token" element={<ResetPassword />} />
               </>
             )
           }
